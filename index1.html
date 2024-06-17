@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Interactive Webpage</title>
+    <style>
+        body { 
+            font-family: Arial, sans-serif; 
+            margin: 0;
+            padding: 0;
+        }
+        header {
+            background-color: brown;
+            color: white;
+            text-align: center;
+            padding: 1em 0;
+        }
+        nav ul { 
+            list-style-type: none; 
+            padding: 0; 
+            margin: 0;
+            background-color: palegoldenrod;
+        }
+        nav ul li { 
+            display: inline; 
+            margin-right: 10px; 
+            cursor: pointer;
+            color: black;
+            padding: 10px;
+        }
+        nav ul li:hover {
+            background-color: white;
+        }
+        #content { 
+            margin-top: 20px; 
+            padding: 20px; 
+        }
+        .content-section { 
+            padding: 20px; 
+        }
+        #home { 
+            background-color: #f1f1f1; 
+        }
+        #about { 
+            background-color: #e2e2e2; 
+        }
+        #contact { 
+            background-color: #d3d3d3; 
+        }
+        #confirmation { 
+            background-color:burlywood; 
+        }
+        .hidden { 
+            display: none; 
+        }
+        .error { 
+            color: red; 
+        }
+        .form-container {
+            max-width: 400px;
+            margin: 0 auto;
+            padding: 20px;
+            background-color: #fff;
+            border: 1px solid #ccc;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+        label {
+            display: block;
+            margin-top: 10px;
+        }
+        input, button {
+            display: block;
+            width: calc(100% - 22px);
+            margin-top: 5px;
+            padding: 10px;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <h1>My Webpage</h1>
+    </header>
+    <nav>
+        <ul>
+            <li onclick="showContent('home')">Home</li>
+            <li onclick="showContent('Sign Up')">Sign Up</li>
+        </ul>
+    </nav>
+    <div id="content">
+        <div id="home" class="content-section">
+            <h2>Welcome</h2>
+        </div>
+        <div id="Sign Up" class="content-section hidden">
+            <h2>Sign Up</h2>
+            <div class="form-container">
+                <form id="contactForm" onsubmit="return validateForm()">
+                    <label for="name">Name:</label>
+                    <input type="text" id="name" name="name" required>
+                    <label for="password">Password:</label>
+                    <input type="password" id="password" name="password" required>
+                    <button type="submit">Submit</button>
+                    <p id="formError" class="error hidden">Please fill out all fields correctly.</p>
+                </form>
+            </div>
+        </div>
+        <div id="confirmation" class="content-section hidden">
+            <h2>Form Submitted Successfully!</h2>
+            <p>Submitted Successfully.</p>
+        </div>
+    </div>
+
+    <script>
+        function showContent(sectionId) {
+            const sections = document.querySelectorAll('.content-section');
+            sections.forEach(section => {
+                section.classList.add('hidden');
+            });
+            document.getElementById(sectionId).classList.remove('hidden');
+        }
+
+        function validateForm() {
+            const name = document.getElementById('name').value;
+            const password = document.getElementById('password').value;
+            const errorElement = document.getElementById('formError');
+
+            // Simple form validation
+            if (!name || !password) {
+                errorElement.textContent = 'All fields are required.';
+                errorElement.classList.remove('hidden');
+                return false;
+            }
+            errorElement.classList.add('hidden');
+
+            // Show confirmation message
+            showContent('confirmation');
+            return false; // Prevent form submission
+        }
+    </script>
+</body>
+</html>
